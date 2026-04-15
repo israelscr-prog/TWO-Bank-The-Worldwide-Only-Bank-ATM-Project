@@ -8,11 +8,11 @@ from twobank_atm.domain.exceptions.domain_exceptions import ATMInsufficientCashE
 EUR = Currencies.EUR
 
 
-def make_atm(inventory: dict | None = None) -> ATMMachine:
+def make_atm(initial_cash: dict[int, int] | None = None, location: str = "Gijón - Calle Corrida 12") -> ATMMachine:
     return ATMMachine.install(
-        location="Gijón - Calle Corrida 12",
+        location=location,
         currency=EUR,
-        initial_cash=inventory or {50: 10, 20: 20, 10: 30},
+        initial_cash=initial_cash,
     )
 
 

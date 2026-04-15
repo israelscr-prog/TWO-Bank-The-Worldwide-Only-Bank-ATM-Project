@@ -52,7 +52,7 @@ class Transaction:
     account_id:       UUID
     transaction_type: TransactionType
     status:           TransactionStatus
-    atm_id:           UUID
+    atm_id:           UUID | None
     id:               UUID            = field(default_factory=uuid4)
     amount:           Money | None    = field(default=None)
     timestamp:        datetime        = field(default_factory=lambda: datetime.now(timezone.utc))
@@ -99,7 +99,7 @@ class Transaction:
     def record_balance_inquiry(
         cls,
         account_id: UUID,
-        atm_id: UUID,
+        atm_id: UUID | None,
     ) -> "Transaction":
         """Record a balance inquiry (no amount involved)."""
         return cls(
@@ -108,6 +108,39 @@ class Transaction:
             status=TransactionStatus.SUCCESS,
             atm_id=atm_id,
             note="Balance inquiry",
+        )
+
+    @classmethod
+    def record_pin_change(
+        cls,
+        account_id: UUID,
+        atm_id: UUID | None = None,
+    ) -> "Transaction":
+        """Record a successful PIN change."""
+        return cls(
+            account_id=account_id,
+            transaction_type=TransactionType.PIN_CHANGE,
+            status=TransactionStatus.SUCCESS,
+            atm_id=atm_id,
+            note="PIN change successful.",
+        )
+
+    @classmethod
+    def record_transfer(
+        cls,
+        account_id: UUID,
+        amount: Money,
+        atm_id: UUID | None,
+        to_account_id: UUID,
+    ) -> "Transaction":
+        """Record a successful transfer."""
+        return cls(
+            account_id=account_id,
+            transaction_type=TransactionType.TRANSFER,
+            status=TransactionStatus.SUCCESS,
+            atm_id=atm_id,
+            amount=amount,
+            note=f"Transfer of {amount} to account {to_account_id}",
         )
 
     @classmethod
