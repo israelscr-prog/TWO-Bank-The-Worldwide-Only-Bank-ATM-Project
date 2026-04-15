@@ -44,3 +44,4 @@ class TestPinVerification:
         pin2 = Pin.create("1234")
         # Same PIN but different salts → different hashes
         assert pin1._hashed_pin != pin2._hashed_pin
+        

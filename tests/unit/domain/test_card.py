@@ -72,3 +72,4 @@ class TestPinVerification:
         card.expiry_date = date(2020, 1, 1)
         with pytest.raises(CardExpiredError):
             card.verify_pin("1234")
+            

@@ -43,3 +43,4 @@ class TestCurrencies:
 
     def test_bitcoin_in_catalog(self):
         assert Currencies.BTC in Currencies.ALL
+        
