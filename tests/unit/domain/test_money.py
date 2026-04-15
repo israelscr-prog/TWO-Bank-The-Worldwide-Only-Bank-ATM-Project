@@ -80,4 +80,3 @@ class TestMoneyComparison:
 class TestMoneyDisplay:
     def test_str_format(self):
         assert str(Money.of("1234.50", EUR)) == "€1,234.50"
-        
